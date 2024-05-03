@@ -31,11 +31,7 @@ export function NavBar() {
   );
 }
 
-interface NavigationsProps {
-  afterNavigate?: () => void;
-}
-
-function Navigations({ afterNavigate }: NavigationsProps) {
+function Navigations({ afterNavigate }: { afterNavigate?: () => void }) {
   const handleNavigate = () => {
     if (afterNavigate) {
       afterNavigate();
