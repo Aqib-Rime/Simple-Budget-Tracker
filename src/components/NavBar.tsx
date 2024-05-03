@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { Handshake, Menu } from 'lucide-react';
-import { UserButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs';
 import { ModeToggle } from '@/components/ModeToogle';
 import { Button } from '@/components/ui/button';
 import {
@@ -22,7 +22,12 @@ export function NavBar() {
       <nav className="hidden gap-6 text-sm font-medium md:flex md:items-center">
         <Navigations />
         <ModeToggle />
-        <UserButton afterSignOutUrl={'/sign-in'} />
+        <SignedIn>
+          <UserButton afterSignOutUrl={'/sign-in'} />
+        </SignedIn>
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
       </nav>
       <nav className="md:hidden">
         <SheetDemo />
