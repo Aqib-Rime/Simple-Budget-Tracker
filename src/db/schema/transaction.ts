@@ -1,6 +1,8 @@
 import { decimal, pgEnum, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { createId } from '@paralleldrive/cuid2';
 import { InferSelectModel, relations } from 'drizzle-orm';
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
+import { z } from 'zod';
 
 export const typeEnum = pgEnum('transaction_type', ['income', 'expense']);
 
@@ -43,7 +45,11 @@ export const transaction = pgTable('transaction', {
   createdAt: timestamp('created_at').defaultNow(),
 });
 
-export type TTransaction = InferSelectModel<typeof transaction>;
+export const InsertTransactionSchema = createInsertSchema(transaction);
+export type TITransaction = z.infer<typeof InsertTransactionSchema>;
+
+export const SelectTransactionSchema = createSelectSchema(transaction);
+export type TSTransaction = z.infer<typeof SelectTransactionSchema>;
 
 export const transactionRelations = relations(transaction, ({ one, many }) => ({
   user: one(user, {

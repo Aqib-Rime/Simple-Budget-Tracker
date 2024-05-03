@@ -2,8 +2,9 @@ import { db } from '@/db';
 import { auth } from '@clerk/nextjs/server';
 import { notFound } from 'next/navigation';
 import ExpenseTable from '@/app/transactions/_components/expense-table';
+import { AddTransaction } from '@/components/AddTransaction';
 
-function wait(ms: number): Promise<void> {
+export function wait(ms: number): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
@@ -21,10 +22,11 @@ export default async function Page() {
     with: { category: true },
   });
 
-  console.log(trans);
-
   return (
-    <div>
+    <div className="flex flex-col gap-y-2 mx-10 mt-4">
+      <div className="flex justify-end">
+        <AddTransaction />
+      </div>
       <ExpenseTable data={trans} />
     </div>
   );

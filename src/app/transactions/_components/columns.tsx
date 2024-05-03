@@ -1,8 +1,8 @@
 import { ColumnDef } from '@tanstack/table-core';
-import { category, TCategory, TTransaction } from '@/db/schema/transaction';
+import { category, TCategory, TSTransaction } from '@/db/schema/transaction';
 import { cn } from '@/lib/utils';
 
-export const columns: ColumnDef<TTransaction & { category: TCategory }>[] = [
+export const columns: ColumnDef<TSTransaction & { category: TCategory }>[] = [
   {
     accessorKey: 'amount',
     header: 'Amount',
