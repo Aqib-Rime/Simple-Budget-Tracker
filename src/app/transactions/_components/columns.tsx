@@ -1,5 +1,5 @@
 import { ColumnDef } from '@tanstack/table-core';
-import { category, TCategory, TSTransaction } from '@/db/schema/transaction';
+import { TCategory, TSTransaction } from '@/db/schema/transaction';
 import { cn } from '@/lib/utils';
 
 export const columns: ColumnDef<TSTransaction & { category: TCategory }>[] = [
@@ -18,7 +18,14 @@ export const columns: ColumnDef<TSTransaction & { category: TCategory }>[] = [
     },
   },
   { accessorKey: 'description', header: 'Description' },
-  { accessorKey: 'createdAt', header: 'Date' },
+  {
+    accessorKey: 'createdAt',
+    header: 'Date',
+    cell: ({ row }) => {
+      const date: Date = row.getValue('createdAt');
+      return <div>{date.toDateString()}</div>;
+    },
+  },
   {
     accessorKey: 'transactionType',
     header: 'Type',
