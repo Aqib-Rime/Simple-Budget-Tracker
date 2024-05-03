@@ -62,16 +62,16 @@ function Navigations({ afterNavigate }: { afterNavigate?: () => void }) {
       <Link
         onClick={handleNavigate}
         className="hover:underline hover:underline-offset-4"
-        href="#"
+        href="/transactions"
       >
-        Services
+        Transactions
       </Link>
       <Link
         onClick={handleNavigate}
         className="hover:underline hover:underline-offset-4"
-        href="#"
+        href="/settings"
       >
-        Contact
+        Settings
       </Link>
     </>
   );

@@ -1,34 +1,33 @@
 import { Button } from '@/components/ui/button';
 import { db } from '@/db';
-import { transactions } from '@/db/schema/transaction';
+import { transaction } from '@/db/schema/transaction';
 import { revalidatePath } from 'next/cache';
 import { eq, sum } from 'drizzle-orm';
 
 export default async function Home() {
-  const transactions_see = await db.select().from(transactions);
+  const transactions = await db.select().from(transaction);
   const totalAmount = await db
     .select({
-      totalAmount: sum(transactions.amount),
+      totalAmount: sum(transaction.amount),
     })
-    .from(transactions);
-  // const sumTest = totalAmount.reduce((acc, curr) => acc + (Number(curr.totalAmount ?? '0')), 0);
+    .from(transaction);
   return (
     <main className="m-10">
-      NextJs starter template {transactions_see.length}
+      NextJs starter template {transactions.length}
       <div className={'flex flex-col gap-y-2 mb-4'}>
-        {transactions_see.map((transaction) => {
+        {transactions.map((tran) => {
           return (
-            <div className={'flex gap-x-2 items-center'} key={transaction.id}>
-              <p>{transaction.transactionType}</p>
-              <p>{transaction.amount}</p>
-              <p>{transaction.id}</p>
-              <p>{transaction.createdAt?.toISOString()}</p>
+            <div className={'flex gap-x-2 items-center'} key={tran.id}>
+              <p>{tran.transactionType}</p>
+              <p>{tran.amount}</p>
+              <p>{tran.id}</p>
+              <p>{tran.createdAt?.toISOString()}</p>
               <form
                 action={async () => {
                   'use server';
                   await db
-                    .delete(transactions)
-                    .where(eq(transactions.id, transaction.id));
+                    .delete(transaction)
+                    .where(eq(transaction.id, tran.id));
                   revalidatePath('/');
                 }}
               >
@@ -43,10 +42,10 @@ export default async function Home() {
       <form
         action={async () => {
           'use server';
-          await db.insert(transactions).values({
-            transactionType: 'expense',
-            amount: '100.3',
-          });
+          // await db.insert(transaction).values({
+          //   transactionType: 'expense',
+          //   amount: '100.3',
+          // });
           revalidatePath('/');
         }}
       >
