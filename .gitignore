@@ -37,3 +37,7 @@ next-env.d.ts
 
 pnpm-lock.yaml
 .idea
+
+# db
+drizzle
+drizzle.config.ts
