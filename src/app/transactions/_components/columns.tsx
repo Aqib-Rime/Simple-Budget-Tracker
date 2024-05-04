@@ -1,15 +1,20 @@
 import { ColumnDef } from '@tanstack/table-core';
 import { TCategory, TSTransaction } from '@/db/schema/transaction';
 import { cn } from '@/lib/utils';
+import { DataTableColumnHeader } from '@/app/transactions/_components/DataTableColumnHeader';
 
 export const columns: ColumnDef<TSTransaction & { category: TCategory }>[] = [
   {
     accessorKey: 'amount',
-    header: 'Amount',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Amount'} />
+    ),
   },
   {
     accessorKey: 'category',
-    header: 'Category',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Category'} />
+    ),
     cell: ({ row }) => {
       const category: TCategory = row.getValue('category');
       return (
@@ -17,10 +22,17 @@ export const columns: ColumnDef<TSTransaction & { category: TCategory }>[] = [
       );
     },
   },
-  { accessorKey: 'description', header: 'Description' },
+  {
+    accessorKey: 'description',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Description'} />
+    ),
+  },
   {
     accessorKey: 'createdAt',
-    header: 'Date',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Date'} />
+    ),
     cell: ({ row }) => {
       const date: Date = row.getValue('createdAt');
       return <div>{date.toDateString()}</div>;
@@ -28,7 +40,9 @@ export const columns: ColumnDef<TSTransaction & { category: TCategory }>[] = [
   },
   {
     accessorKey: 'transactionType',
-    header: 'Type',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title={'Type'} />
+    ),
     cell: ({ row }) => {
       const type: string = row.getValue('transactionType');
       return (
