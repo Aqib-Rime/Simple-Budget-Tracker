@@ -47,10 +47,13 @@ export const columns: ColumnDef<TSTransaction & { category: TCategory }>[] = [
       const type: string = row.getValue('transactionType');
       return (
         <div
-          className={cn('text-center font-medium capitalize p-2 rounded-lg', {
-            'bg-red-400/10 text-red-500': type === 'expense',
-            'bg-emerald-400/10 text-emerald-500': type === 'income',
-          })}
+          className={cn(
+            'text-center font-medium capitalize p-2 -my-4 rounded-lg',
+            {
+              'bg-red-400/10 text-red-500': type === 'expense',
+              'bg-emerald-400/10 text-emerald-500': type === 'income',
+            },
+          )}
         >
           {type}
         </div>

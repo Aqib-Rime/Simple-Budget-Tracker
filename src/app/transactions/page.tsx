@@ -6,12 +6,6 @@ import { AddTransaction } from '@/components/AddTransaction';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export function wait(ms: number): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
 export default async function Page() {
   const { userId } = auth();
   if (!userId) {
@@ -19,7 +13,6 @@ export default async function Page() {
   }
 
   const getTransactions = async () => {
-    await wait(3000);
     return db.query.transaction.findMany({
       where: (transaction, { eq }) => eq(transaction.userId, userId),
       with: { category: true },

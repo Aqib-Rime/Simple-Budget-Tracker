@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/button';
 import { db } from '@/db';
 import { transaction } from '@/db/schema/transaction';
-import { revalidatePath } from 'next/cache';
+import { revalidatePath, unstable_noStore } from 'next/cache';
 import { eq, sum } from 'drizzle-orm';
 
 export default async function Home() {
+  unstable_noStore();
   const transactions = await db.select().from(transaction);
   const totalAmount = await db
     .select({
