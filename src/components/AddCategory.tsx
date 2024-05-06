@@ -21,6 +21,7 @@ export function AddCategory() {
   const [pending, startTransition] = useTransition();
   const category = useSignal('');
   const error = useSignal('');
+
   const open = useSignal(false);
   const categories = useSignal<TCategory[]>([]);
 
@@ -38,7 +39,13 @@ export function AddCategory() {
       {computed(() => (
         <Dialog
           open={open.value}
-          onOpenChange={(value) => (open.value = value)}
+          onOpenChange={(value) => {
+            open.value = value;
+            if (!open.value) {
+              category.value = '';
+              error.value = '';
+            }
+          }}
         >
           <DialogTrigger asChild>
             <Button onClick={() => (open.value = true)} variant="outline">
